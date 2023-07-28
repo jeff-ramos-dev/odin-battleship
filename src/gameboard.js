@@ -1,10 +1,14 @@
-const Ship = require('./ship.js');
+import Ship from './ship.js';
 
-class Gameboard {
+export default class Gameboard {
     ships = this.#createShips();
     #cells = this.#createEmptyBoard();
     #attacks = [];
     #misses = [];
+
+    resetBoard() {
+        this.#cells = this.#createEmptyBoard();
+    };
 
     #createShips() {
         const shipObject = {};
@@ -37,54 +41,54 @@ class Gameboard {
     };
 
     receiveAttack(x, y) {
-        const attackCoord = [x, y];
+        const attackCoord = [y, x];
         for (let i = 0; i < this.#attacks.length; i++) {
             if (attackCoord.every((val, index) => val === this.#attacks[i][index])) {
                 return;
             }
         }
-        if (this.#cells[x][y].hit()) {
-            this.#attacks.push([x, y]);
+        if (this.#cells[y][x].hit()) {
+            this.#attacks.push([y, x]);
             return true
         } else {
-            this.#attacks.push([x, y]);
-            this.#misses.push([x, y]);
+            this.#attacks.push([y, x]);
+            this.#misses.push([y, x]);
             return false
         };
     };
 
     setShip(ship, start, end) {
         if (
-        start[0] > 9 || start[1] > 9 ||
-        end[0] > 9 || end[1] > 9 ||
-        start[0] < 0 || start[1] < 0 ||
-        end[0] < 0 || end[1] < 0
+        start[1] > 9 || start[0] > 9 ||
+        end[1] > 9 || end[0] > 9 ||
+        start[1] < 0 || start[0] < 0 ||
+        end[1] < 0 || end[0] < 0
         ) throw new Error('out of bounds');
 
-        if (start[0] === end[0]) {
+        if (start[1] === end[1]) {
             // vertical
-            if (start[1] < end[1]) {
+            if (start[0] < end[0]) {
                 // go down
                 for (let i = 0; i < ship.length; i++) {
-                    this.#cells[start[0]][start[1] + i] = ship;
+                    this.#cells[start[1]][start[0] + i] = ship;
                 };
             } else {
                 // go up
                 for (let i = 0; i < ship.length; i++) {
-                    this.#cells[start[0]][start[1] - i] = ship;
+                    this.#cells[start[1]][start[0] - i] = ship;
                 };
             };
         } else {
             // horizontal
-            if (start[0] < end[0]) {
+            if (start[1] < end[1]) {
                 // go right
                 for (let i = 0; i < ship.length; i++) {
-                    this.#cells[start[0] + i][start[1]] = ship;
+                    this.#cells[start[1] + i][start[0]] = ship;
                 };
             } else {
                 // go left
                 for (let i = 0; i < ship.length; i++) {
-                    this.#cells[start[0] - i][start[1]] = ship;
+                    this.#cells[start[1] - i][start[0]] = ship;
                 };
             };
         };
@@ -100,5 +104,3 @@ class Gameboard {
         return true;
     };
 };
-
-module.exports = Gameboard;

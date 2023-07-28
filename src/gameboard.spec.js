@@ -1,5 +1,5 @@
-const Gameboard = require('./gameboard.js');
-const Ship = require('./ship.js');
+import Gameboard from './gameboard.js';
+import Ship from './ship.js';
 
 describe('new tests for gameboard', () => {
     test('ships initiate correctly', () => {

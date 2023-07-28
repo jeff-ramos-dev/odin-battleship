@@ -1,5 +1,6 @@
-const Gameboard = require('./gameboard.js');
-class Player {
+import Gameboard from './gameboard.js';
+
+export default class Player {
     myName; 
     myBoard = new Gameboard;
     alpha = this.myBoard.ships['alpha'];
@@ -36,5 +37,3 @@ class Player {
         this.myBoard.setShip(this.epsilon, start, end)
     }
 };
-
-module.exports = Player;
