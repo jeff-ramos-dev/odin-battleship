@@ -3,134 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battleship</title>
+    <title>BATTLESHIP</title>
     <script src="./game.js" type="module" defer></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <h1>Battleship</h1> 
+    <h1>BATTLESHIP</h1> 
     <input class="input" type="text">
-    <button class="button">submit</button>
+    <button class="button">SUBMIT</button>
     <p class="player-name"></p>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-    </div>
-    <div class="row">
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
-        <div class="column"></div>
+    <div class="gameboard">
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
+        <div class="row">
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+        </div>
     </div>
     <button class="reset">RESET</button>
     <div class="ship-container">

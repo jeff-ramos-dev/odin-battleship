@@ -3,8 +3,10 @@ import Player from './player';
 
 const input = document.querySelector('.input');
 const button = document.querySelector('.button');
-const playerNameElement = document.querySelector('.player-name')
+const playerNameElement = document.querySelector('.player-name');
 const reset = document.querySelector('.reset');
+const shipContainer = document.querySelector('.ship-container');
+const board = document.querySelector('.gameboard');
 
 reset.addEventListener('click', () => {
     player1.myBoard.resetBoard();
@@ -34,7 +36,8 @@ let currentShip;
 for (let i = 0; i < ships.length; i++) {
     ships[i].addEventListener('click', () => {
         currentShip = ships[i];
-        console.log(currentShip);
+        alpha.style.filter = beta.style.filter = gamma.style.filter = delta.style.filter = epsilon.style.filter = 'invert(1)'
+        currentShip.style.filter = 'none';
     });
 };
 
@@ -43,9 +46,7 @@ const cells = Array.from(document.querySelectorAll('.column'));
 for (let i = 0; i < cells.length; i++) {
     cells[i].addEventListener('click', () => {
         let startX = i <  10 ? i : i < 20 ? i - 10 : i < 30 ? i - 20 : i < 40 ? i - 30 : i < 50 ? i - 40 : i < 60 ? i - 50 : i < 70 ? i - 60 : i < 80 ? i - 70 : i < 90 ? i - 80 : i - 90;
-        console.log(startX)
         let startY = Math.floor(i / 10);
-        console.log(startY)
         let endX;
         let endY = startY;
         let ship = currentShip.classList[1]
@@ -56,14 +57,18 @@ for (let i = 0; i < cells.length; i++) {
             case 'delta': endX = startX + 3;break;
             case 'epsilon': endX = startX + 4;break;
         };
-        console.log(endX);
-        console.log(endY);
         let start = [startX, startY];
         let end = [endX, endY];
-        console.log(start, end);
         player1.myBoard.setShip(player1[ship], start, end);
-        console.log(player1.myBoard);
         let length = Math.abs(endX + 1 - startX);
+        shipContainer.removeChild(currentShip);
+        board.appendChild(currentShip);
+        console.log(startX);
+        console.log(startY);
+        currentShip.style.margin = '0';
+        currentShip.style.position = 'absolute';
+        currentShip.style.top = `${(startY + 1) * 44 + 2}px`;
+        currentShip.style.left = `${(startX + 1) * 46 + 4}px`;
         for (let j = 0; j < length; j++) {
             cells[i + j].style.backgroundColor = 'blue';
         };
