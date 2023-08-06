@@ -12,7 +12,8 @@
 }
 
 body {
-    margin: 20px;
+    margin-top: 20px;
+    padding: 5px;
     background: black;
     display: grid; 
     place-items: center;
@@ -28,14 +29,22 @@ input {
 
 button {
     margin-top: 20px;
+    min-width: 80px;
     border-radius: 4px;
     padding: 4px 8px;
     background-color: transparent;
     border: 2px solid green;
 }
 
+button:hover {
+    background-color: rgb(38, 38, 38);
+}
+
+.reset {
+    margin-left: 20px;
+}
+
 .cell:hover {
-    background-color: rgba(200, 200, 200, 0.2);
     cursor: pointer;
 }
 
@@ -112,4 +121,10 @@ button {
     width: 181px;
     transform: scale(1.2, 0.9) translateX(16px);
     background-image: url('./images/Epsilon.png');
+}
+
+.placed {
+    margin: 0;
+    position: absolute;
+    pointer-events: none;
 }
