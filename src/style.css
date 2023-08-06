@@ -44,6 +44,10 @@ button:hover {
     margin-left: 20px;
 }
 
+.submit {
+    opacity: 0.5;
+}
+
 .cell:hover {
     cursor: pointer;
 }
@@ -126,5 +130,4 @@ button:hover {
 .placed {
     margin: 0;
     position: absolute;
-    pointer-events: none;
 }

@@ -1,212 +1,125 @@
-import './style.css'
-import Player from './player'
-import Ship from './ship'
-import './images/Alpha.png'
-import './images/Beta.png'
-import './images/Gamma.png'
-import './images/Delta.png'
-import './images/Epsilon.png'
+import  { player1 } from './gameSetup';
+import Player from './player';
+import Ship from './ship';
 
-const player1 = new Player('player1');
-const reset = document.querySelector('.reset');
-const shipContainer = document.querySelector('.ship-container');
-const axis = document.querySelector('.axis');
-const alpha = document.querySelector('.alpha');
-const beta = document.querySelector('.beta');
-const gamma = document.querySelector('.gamma');
-const delta = document.querySelector('.delta');
-const epsilon = document.querySelector('.epsilon');
-const board = document.querySelector('.gameboard');
-const ships = [alpha, beta, gamma, delta, epsilon];
-const cells = Array.from(document.querySelectorAll('.cell'));
-let currentShip;
-let vertical = false;
+export default function startGame() {
+    // render player board
+    // render computer board
+    // set up event listeners
+        // if it's your turn, the enemy board should have full opacity, otherwise fade down.
+        // On your turn, when you click on the enemy board, it should call hit on the gameBoard cell and depending on the result, display a miss or a hit. If it sinks the ship, reveal the whole ship.
+    console.log('game started')
+    const computer = new Player('Computer');
+    renderBoards();
+    console.log(player1.myBoard);
+    console.log(computer.myBoard);
+    setupEventListeners();
+    
+    let playerTurn = true;
 
-function selectShip(shipElem) { // Good to go
-    currentShip = shipElem;
-    alpha.style.border = beta.style.border = gamma.style.border = delta.style.border = epsilon.style.border = '';
-    currentShip.style.border = '2px solid black';       
-};
-
-function updateCellStyling() {
-    for (let i = 0; i < player1.myBoard.cells.length; i++) {
-        for (let j = 0; j < player1.myBoard.cells[i].length; j++) {
-            if (player1.myBoard.cells[i][j] instanceof Ship) {
-                cells[i * 10 + j].style.backgroundColor = 'green'
-            } else {
-                cells[i * 10 + j].style.backgroundColor = '';
+    function renderBoards() {
+        const alpha = document.querySelector('.alpha');
+        const beta = document.querySelector('.beta');
+        const gamma = document.querySelector('.gamma');
+        const delta = document.querySelector('.delta');
+        const epsilon = document.querySelector('.epsilon');
+        const setupBoard = document.querySelector('.gameboard');
+        const playerBoard = document.createElement('div');
+        playerBoard.classList.add('gameboard', 'player-board');
+        const computerBoard = document.createElement('div');
+        computerBoard.classList.add('gameboard', 'computer-board');
+        for (let i = 0; i < 100; i++) {
+            const newPlayerCell = document.createElement('div');
+            const newComputerCell = document.createElement('div');
+            newPlayerCell.classList.add('cell');
+            newComputerCell.classList.add('cell');
+            playerBoard.appendChild(newPlayerCell)
+            computerBoard.appendChild(newComputerCell);
+            const x = i % 10;
+            const y = Math.floor(i / 10);
+            if (player1.myBoard.cells[y][x] instanceof Ship) {
+                const shipName = player1.myBoard.cells[y][x].name;
+                // newPlayerCell.appendChild(document.querySelector(`.${shipName}`));
+                newPlayerCell.backgroundColor = 'green';
             };
         };
+        const gameContainer = document.createElement('div');
+        gameContainer.classList.add('game-container');
+
+        const submit = document.querySelector('.submit');
+        const reset = document.querySelector('.reset');
+        const axis = document.querySelector('.axis-instructions');
+        const buttons = document.querySelector('.buttons');
+        submit.parentElement.removeChild(submit);
+        reset.parentElement.removeChild(reset);
+        axis.parentElement.removeChild(axis);
+        buttons.parentElement.removeChild(buttons);
+        setupBoard.parentElement.removeChild(setupBoard);
+
+        computer.myBoard.setShip(computer.myBoard.ships['alpha'], [0, 0], [1, 0]);
+        computer.myBoard.setShip(computer.myBoard.ships['beta'], [0, 1], [2, 1]);
+        computer.myBoard.setShip(computer.myBoard.ships['gamma'], [0, 2], [2, 2]);
+        computer.myBoard.setShip(computer.myBoard.ships['delta'], [0, 3], [3, 3]);
+        computer.myBoard.setShip(computer.myBoard.ships['epsilon'], [0, 4], [4, 4]);
+
+        gameContainer.appendChild(playerBoard);
+        gameContainer.appendChild(computerBoard);
+        document.body.appendChild(gameContainer);
     };
-}
-
-function removeShip(ship) { // needs work
-    ship.parentElement.removeChild(ship);
-    const shipName = ship.classList[1];
-    player1.myBoard.removeShip(shipName);
-    console.log(player1.myBoard.cells)
-    updateCellStyling();
-};
-
-function flipAxis() { // Good to go
-    vertical = !vertical;
-    axis.textContent = vertical ? 'VERTICAL' : 'HORIZONTAL';
-};
-
-function clearBoard() { // Good to go
-    player1.myBoard.resetBoard();
-    alpha.parentElement.removeChild(alpha);
-    if (alpha.classList.contains('placed')) alpha.classList.remove('placed');
-    alpha.style.transform = '';
-    beta.parentElement.removeChild(beta);
-    if (beta.classList.contains('placed')) beta.classList.remove('placed');
-    beta.style.transform = '';
-    gamma.parentElement.removeChild(gamma);
-    if (gamma.classList.contains('placed')) gamma.classList.remove('placed');
-    gamma.style.transform= '';
-    delta.parentElement.removeChild(delta);
-    if (delta.classList.contains('placed')) delta.classList.remove('placed');
-    delta.style.transform = '';
-    epsilon.parentElement.removeChild(epsilon);
-    if (epsilon.classList.contains('placed')) epsilon.classList.remove('placed');
-    epsilon.style.transform = '';
-
-    if (!shipContainer.parentElement !== document.body) {
-        document.body.appendChild(shipContainer)
+    
+    function playerAttack(x, y) {
+        if (!playerTurn) {
+            return;
+        };
+        playerTurn = !playerTurn;
+        if (computer.myBoard.receiveAttack(x, y)) {
+            return true;
+        } else return false;
     };
 
-    shipContainer.appendChild(alpha);
-    shipContainer.appendChild(beta);
-    shipContainer.appendChild(gamma);
-    shipContainer.appendChild(delta);
-    shipContainer.appendChild(epsilon);
-
-    Array.from(document.querySelectorAll('.cell')).forEach((elem) => elem.style.backgroundColor = '');
-};
-
-function findIndex(cell) {
-    const parent = cell.parentElement;
-    const children = Array.from(parent.children);
-    return children.indexOf(cell);
-};
-
-function placeShip(index) { // needs work
-    if (!currentShip) return;
-
-    if (currentShip.classList.contains('placed')) {
-        // remove from current position
-        removeShip(currentShip);
-    }
-    cells[index].appendChild(currentShip);
-    const ship = currentShip.classList[1];
-    const length = player1.myBoard.ships[ship].length
-    const startX = index % 10;
-    const startY = Math.floor(index / 10);
-    let endX;
-    let endY;
-    if (vertical) {
-        endX = startX     
-        endY = startY + (length - 1);
-    } else {
-        endX = startX + (length - 1);
-        endY = startY;
-    };
-    const start = [startX, startY];
-    const end = [endX, endY];
-    player1.myBoard.setShip(player1[ship], start, end);
-
-    updateCellStyling();
-
-    if (vertical) {
-        styleVertical(currentShip, length);
-    } else {
-        currentShip.style.transform = '';
-        currentShip.style.top = '';
-        currentShip.style.left = '';
+    function computerAttack(x, y) {
+        if (playerTurn) {
+            return
+        };
+        playerTurn = !playerTurn;
+        if (player1.myBoard.receiveAttack(x, y)) {
+            return true;
+        } else return false;
     };
 
-    if (!currentShip.classList.contains('placed')) {
-        currentShip.classList.add('placed');
-    };
-};
-
-function styleVertical(ship, length) { // Good to go
-    ship.style.transform = 'rotate(90deg)';
-    ship.style.top = `${(44 * (0.5 * (length - 1)))}px`;
-    ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 6}px`;
-    if (ship.classList[1] === 'beta') {
-        ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 18}px`;
-    };
-};
-
-function setupEventListeners() {
-
-    for (let i = 0; i < ships.length; i++) {
-        ships[i].addEventListener('click', e => {
-            selectShip(e.target);
-        });
-    };
-
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].addEventListener('click', e => {
-            if (e.target.classList.contains('cell')) {
-                placeShip(findIndex(e.target));
-            };
-        });
-
-
-        cells[i].addEventListener('mouseenter', e => {
-            if (!currentShip || cells[i].style.backgroundColor === 'green') return
-            for (let j = 0; j < cells.length; j++) {
-                cells[j].style.border = '2px solid grey';
-            };
-            const ship = currentShip.classList[1];
-            const length = player1.myBoard.ships[ship].length;
-            for (let j = 0; j < length; j++) {
-                if (vertical) {
-                    if (i + (length - 1) * 10 > 99 && i + j * 10 < 99) {
-                        cells[i + j * 10].style.border = '20px solid red';
-                    } else if (i + j * 10 < 99) {
-                        cells[i + j * 10].style.border ='20px solid green';
-                    };
+    function setComputerBoard() {
+        const computerCells = document.querySelectorAll('.computer-board > .cell');
+        for (let i = 0; i < 100; i++) {
+            computerCells[i].style.border = '2px solid red';
+            const x = i % 10;
+            const y = Math.floor(i / 10);
+            computerCells[i].addEventListener('click', () => {
+                if (playerAttack(x, y)) {
+                    computerCells[i].style.backgroundColor = 'red';
                 } else {
-                    if (i % 10 + length > 10 && i % 10 + j < 10) {
-                        cells[i + j].style.border = '20px solid red';
-                    } else if (i % 10 + j < 10) {
-                        cells[i + j].style.border = '20px solid green';
-                    };
+                    computerCells[i].style.backgroundColor = 'white';
                 };
-            };
-        });
+            });
+        };
     };
 
-    board.addEventListener('mouseleave', e => {
-        cells.forEach((cell) => cell.style.border = '2px solid grey');
-    });
+    function setPlayerBoard() {
+        const playerCells = document.querySelectorAll('.player-board > .cell');
+        for (let i = 0; i < 100; i++) {
+            const x = i % 10;
+            const y = Math.floor(i / 10);
+            playerCells[i].addEventListener('click', () => {
+                if (computerAttack(x,y)) {
+                    playerCells[i].style.backgroundColor = 'red';
+                } else {
+                    playerCells[i].style.backgroundColor = 'white';
+                };
+            })
+        }
+    };
 
-    reset.addEventListener('click', clearBoard);
-    // submit.addEventListener('click', submitShips);
-
-    window.addEventListener('click', e => {
-        if (!e.target.classList.contains('ship') && currentShip) {
-            currentShip.style.border = 'none';
-            if (!e.target.classList.contains('cell')) {
-                currentShip = undefined;
-            };
-        };
-    });
-
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Shift' && !vertical) {
-            flipAxis();
-        };
-    });
-
-    window.addEventListener('keyup', (e) => {
-        if (e.key === 'Shift' && vertical) {
-            flipAxis();
-        };
-    });
+    function setupEventListeners() {
+        setComputerBoard();
+        setPlayerBoard();
+    };
 };
-
-setupEventListeners();
