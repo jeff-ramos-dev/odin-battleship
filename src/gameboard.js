@@ -74,10 +74,7 @@ export default class Gameboard {
         for (let i = 0; i < this.cells.length; i++) {
             for (let j = 0; j < this.cells[i].length; j++) {
                 if (this.cells[i][j] instanceof Ship) {
-                    console.log('looking for', shipName);
-                    console.log('found ship ', i, j, this.cells[i][j].name);
                     if (this.cells[i][j].name === shipName) {
-                        console.log(i, j, shipName);
                         this.cells[i][j] = emptyCell
                     };
                 };
@@ -97,7 +94,7 @@ export default class Gameboard {
         end[1] > 9 || end[0] > 9 ||
         start[1] < 0 || start[0] < 0 ||
         end[1] < 0 || end[0] < 0
-        ) throw new Error('out of bounds');
+        ) return false; 
 
         if (this.#placedShips.includes(ship.name)) {
             this.removeShip(ship);
@@ -110,7 +107,7 @@ export default class Gameboard {
                 for (let i = 0; i < ship.length; i++) {
                     if (this.cells[start[1]][start[0] + i] instanceof Ship) {
                         this.removeShip(ship.name);
-                        throw new Error('ships overlap');
+                        return false; 
                     };
                     this.cells[start[1]][start[0] + i] = ship;
                 };
@@ -119,7 +116,7 @@ export default class Gameboard {
                 for (let i = 0; i < ship.length; i++) {
                     if (this.cells[start[1]][start[0] - i] instanceof Ship) {
                         this.removeShip(ship.name);
-                        throw new Error('ships overlap');
+                        return false; 
                     };
                     this.cells[start[1]][start[0] - i] = ship;
                 };
@@ -131,7 +128,7 @@ export default class Gameboard {
                 for (let i = 0; i < ship.length; i++) {
                     if (this.cells[start[1] + i][start[0]] instanceof Ship) {
                         this.removeShip(ship.name);
-                        throw new Error('ships overlap');
+                        return false; 
                     };
                     this.cells[start[1] + i][start[0]] = ship;
                 };
@@ -140,7 +137,7 @@ export default class Gameboard {
                 for (let i = 0; i < ship.length; i++) {
                     if (this.cells[start[1] - i][start[0]] instanceof Ship) {
                         this.removeShip(ship.name);
-                        throw new Error('ships overlap');
+                        return false;
                     };
                     this.cells[start[1] - i][start[0]] = ship;
                 };
@@ -151,8 +148,8 @@ export default class Gameboard {
     };
 
     isGameOver() {
-        for (let i = 0; i < this.ships.length; i++) {
-            if (!this.ships[i].isSunk()) {
+        for (let ship in this.ships) {
+            if (!this.ships[ship].isSunk()) {
                 return false;
             };
         };

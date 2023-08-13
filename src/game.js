@@ -8,11 +8,6 @@ import deltaImg from './images/Delta.png';
 import epsilonImg from './images/Epsilon.png';
 
 export default function startGame() {
-    // render player board
-    // render computer board
-    // set up event listeners
-        // if it's your turn, the enemy board should have full opacity, otherwise fade down.
-        // On your turn, when you click on the enemy board, it should call hit on the gameBoard cell and depending on the result, display a miss or a hit. If it sinks the ship, reveal the whole ship.
     console.log('game started')
     const computer = new Player('Computer');
     renderBoards();
@@ -41,7 +36,6 @@ export default function startGame() {
 
 
     function renderBoards() {
-
         const setupBoard = document.querySelector('.gameboard');
         const playerBoard = document.createElement('div');
         playerBoard.classList.add('gameboard', 'player-board');
@@ -108,11 +102,18 @@ export default function startGame() {
             const x = i % 10;
             const y = Math.floor(i / 10);
             computerCells[i].addEventListener('click', () => {
-                console.log(x, y);
-                console.log(playerTurn)
                 if (playerTurn && playerAttack(x, y)) {
                     console.log('player hit computer ship');
                     computerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                    if (computer.myBoard.cells[y][x].isSunk()) {
+                        console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
+                        // add image of computer ship to computer board
+                        // add some sort of cross out over it?
+                        if (computer.myBoard.isGameOver()) {
+                            endGame();
+                            return
+                        };
+                    }
                     playerTurn = !playerTurn;
                 } else if (playerTurn) {
                     console.log('player missed');
@@ -124,6 +125,10 @@ export default function startGame() {
             });
         };
     };
+
+    function endGame() {
+        console.log('game Over!');
+    }
 
     function setPlayerBoard() {
         const playerCells = document.querySelectorAll('.player-board > .cell');
@@ -137,6 +142,14 @@ export default function startGame() {
                 if (!playerTurn && computerAttack(x,y)) {
                     console.log('computer hit player ship');
                     playerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                    if (player1.myBoard.cells[y][x].isSunk()) {
+                        console.log('player ', player1.myBoard.cells[y][x].name, ' is sunk!');
+                        // add some sort of cross out over player ship?
+                        if (player1.myBoard.isGameOver()) {
+                            endGame();
+                            return;
+                        };
+                    };
                     playerTurn = !playerTurn;
                 } else if (!playerTurn) {
                     console.log('computer missed');
@@ -156,7 +169,6 @@ export default function startGame() {
             const x = i % 10;
             const y = Math.floor(i / 10);
             if (player1.myBoard.cells[y][x] instanceof Ship && player1.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
-                console.log(shipName, x, y);
                 playerCells[i].appendChild(shipNameToImage[shipName]);
                 shipImagePlaced[shipName] = true;
             };

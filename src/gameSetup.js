@@ -9,6 +9,7 @@ import './images/Delta.png'
 import './images/Epsilon.png'
 
 const player1 = new Player('player1');
+const random = document.querySelector('.random');
 const reset = document.querySelector('.reset');
 const submit = document.querySelector('.submit');
 const shipContainer = document.querySelector('.ship-container');
@@ -108,11 +109,10 @@ function findIndex(cell) {
     return children.indexOf(cell);
 };
 
-function placeShip(index) { // needs work
+function placeShip(index) { 
     if (!currentShip) return;
 
     if (currentShip.classList.contains('placed')) {
-        // remove from current position
         removeShip(currentShip);
     }
     const ship = currentShip.classList[1];
@@ -159,10 +159,10 @@ function placeShip(index) { // needs work
         document.body.removeChild(shipContainer);
         allowSubmit();
     };
-
+    return true;
 };
 
-function styleVertical(ship, length) { // Good to go
+function styleVertical(ship, length) { 
     ship.style.transform = 'rotate(90deg)';
     ship.style.top = `${(44 * (0.5 * (length - 1)))}px`;
     ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 6}px`;
@@ -227,12 +227,45 @@ function setupEventListeners() {
         });
     };
 
+    function getRandomTFIndex() {
+        return Math.floor(Math.random() * 2);
+    };
+
+    function getRandomCellIndex() {
+        return Math.floor(Math.random() * 100);
+    };
+
+    function placeShipsRandomly() {
+        clearBoard(); 
+        const tf = [true, false];
+        currentShip = alpha;
+        vertical = tf[getRandomTFIndex()];
+        while (!placeShip(getRandomCellIndex())) {
+        };
+        vertical = tf[getRandomTFIndex()];
+        currentShip = beta; 
+        while (!placeShip(getRandomCellIndex())) {
+        };
+        vertical = tf[getRandomTFIndex()];
+        currentShip = gamma;
+        while (!placeShip(getRandomCellIndex())) {
+        };
+        vertical = tf[getRandomTFIndex()];
+        currentShip = delta;
+        while (!placeShip(getRandomCellIndex())) {
+        };
+        vertical = tf[getRandomTFIndex()];
+        currentShip = epsilon;
+        while (!placeShip(getRandomCellIndex())) {
+        };
+    };
+
     board.addEventListener('mouseleave', e => {
         updateCellStyling();
     });
 
     reset.addEventListener('click', clearBoard);
-    // submit.addEventListener('click', submitShips);
+    random.addEventListener('click', placeShipsRandomly);
 
     window.addEventListener('click', e => {
         if (!e.target.classList.contains('ship') && currentShip) {
