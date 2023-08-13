@@ -35,7 +35,7 @@ function updateCellStyling() {
     for (let i = 0; i < player1.myBoard.cells.length; i++) {
         for (let j = 0; j < player1.myBoard.cells[i].length; j++) {
             if (player1.myBoard.cells[i][j] instanceof Ship) {
-                cells[i * 10 + j].style.backgroundColor = 'green'
+                cells[i * 10 + j].style.backgroundColor = 'rgba(0, 255, 0, 0.5)'
             } else {
                 cells[i * 10 + j].style.backgroundColor = '';
             };
@@ -204,23 +204,23 @@ function setupEventListeners() {
                     if (i + (length - 1) * 10 > 99 && i + j * 10 < 99) { // if the end of the ship goes out of bounds
                         cells[i + j * 10].style.backgroundColor = 'red';
                     } else if (i + j * 10 < 100) {
-                        if (cells[i + j * 10].style.backgroundColor === 'green') {
-                            cells[i + j * 10].style.backgroundColor = 'red';
+                        if (cells[i + j * 10].style.backgroundColor === 'rgba(0, 255, 0, 0.5') {
+                            cells[i + j * 10].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                         } else {
-                            cells[i + j * 10].style.backgroundColor = 'white';
+                            cells[i + j * 10].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
                         }
                     };
                 } else {
                     if (i % 10 + length > 10 && i % 10 + j < 10) {
-                        cells[i + j].style.backgroundColor = 'red';
+                        cells[i + j].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     } else if (i % 10 + j < 10) {
-                        if (cells[i + j].style.backgroundColor === 'green') {
+                        if (cells[i + j].style.backgroundColor === 'rgba(0, 255, 0, 0.5)') {
                             for (let k = 0; k < length; k++) {
-                            cells[i + j].style.backgroundColor = 'red';
+                            cells[i + j].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                             }
                         } else {
-                            cells[i + j].style.backgroundColor = 'white';
-                        }
+                            cells[i + j].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                        };
                     };
                 };
             };
