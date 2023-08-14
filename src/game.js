@@ -1,4 +1,4 @@
-import  { player1 } from './gameSetup';
+import  { styleVertical, player1 } from './gameSetup';
 import Player from './player';
 import Ship from './ship';
 import alphaImg from './images/Alpha.png';
@@ -169,6 +169,9 @@ export default function startGame() {
             const x = i % 10;
             const y = Math.floor(i / 10);
             if (player1.myBoard.cells[y][x] instanceof Ship && player1.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
+                if (player1.myBoard.cells[y][x+1] !== player1.myBoard.cells[y][x]) {
+                    styleVertical(shipNameToImage[shipName], player1.myBoard.cells[y][x].length);
+                };
                 playerCells[i].appendChild(shipNameToImage[shipName]);
                 shipImagePlaced[shipName] = true;
             };

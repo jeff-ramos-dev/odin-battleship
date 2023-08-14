@@ -294,4 +294,4 @@ function setupEventListeners() {
 
 setupEventListeners();
 
-export { player1 };
+export { player1, styleVertical };
