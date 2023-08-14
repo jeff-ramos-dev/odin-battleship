@@ -99,6 +99,10 @@ export default function startGame() {
     };
 
     function displayMessage(message, element) {
+        let oldOverlays = Array.from(document.querySelectorAll('.overlay-msg'));
+        for (let i = 0; i < oldOverlays.length; i++) {
+            oldOverlays[i].remove();
+        };
         const overlayMsg = document.createElement('h1');
         overlayMsg.classList.add('overlay-msg');
         overlayMsg.textContent = message;
@@ -172,7 +176,7 @@ export default function startGame() {
                     playerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     if (player1.myBoard.cells[y][x].isSunk()) {
                         console.log('player ', player1.myBoard.cells[y][x].name, ' is sunk!');
-                        displayMessage(`${player.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
+                        displayMessage(`${player1.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
                         // add some sort of cross out over player ship?
                         if (player1.myBoard.isGameOver()) {
                             endGame('COMPUTER');
