@@ -121,7 +121,16 @@ export default function startGame() {
                 if (playerTurn && playerAttack(x, y)) {
                     console.log('player hit computer ship');
                     computerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                    computerCells[i].textContent = 'X';
                     if (computer.myBoard.cells[y][x].isSunk()) {
+                        for (let i = 0; i < 100; i++) {
+                            const x = i % 10;
+                            const y = Math.floor(i / 10);
+                            if (computer.myBoard.cells[y][x].isSunk()) {
+                                computerCells[i].style.borderColor = 'red';
+                                computerCells[i].style.color = 'black';
+                            };
+                        };
                         console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
                         displayMessage(`${computer.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, computerBoard);
                         // add image of computer ship to computer board
@@ -138,6 +147,7 @@ export default function startGame() {
                     console.log('player missed');
                     displayMessage('MISS', computerBoard);
                     computerCells[i].style.backgroundColor = 'grey';
+                    computerCells[i].textContent = 'O';
                     playerTurn = !playerTurn;
                 } else {
                     console.log('not player turn');
@@ -174,7 +184,20 @@ export default function startGame() {
                     console.log('computer hit player ship');
                     displayMessage('HIT', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                    const X = document.createElement('p');
+                    X.textContent = 'X';
+                    X.style.color = 'white';
+                    X.style.fontSize = '1.5rem';
+                    playerCells[i].appendChild(X);
                     if (player1.myBoard.cells[y][x].isSunk()) {
+                        for (let i = 0; i < 100; i++) {
+                            const x = i % 10;
+                            const y = Math.floor(i / 10);
+                            if (player1.myBoard.cells[y][x].isSunk()) {
+                                playerCells[i].style.borderColor = 'red';
+                                playerCells[i].children[playerCells[i].children.length - 1].style.color = 'black';
+                            };
+                        };
                         console.log('player ', player1.myBoard.cells[y][x].name, ' is sunk!');
                         displayMessage(`${player1.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
                         // add some sort of cross out over player ship?
@@ -188,6 +211,7 @@ export default function startGame() {
                     console.log('computer missed');
                     displayMessage('MISS', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                    playerCells[i].textContent = 'O';
                     playerTurn = !playerTurn;
                 } else {
                     console.log('not computer turn');
