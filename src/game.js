@@ -10,9 +10,12 @@ import epsilonImg from './images/Epsilon.png';
 export default function startGame() {
     console.log('game started')
     const computer = new Player('Computer');
+    const playerBoard = document.createElement('div');
+    const computerBoard = document.createElement('div');
+
+
     renderBoards();
-    console.log(player1.myBoard);
-    console.log(computer.myBoard);
+
     const alpha = new Image()
     alpha.classList.add('alpha', 'ship', 'placed');
     alpha.src = alphaImg;
@@ -28,18 +31,18 @@ export default function startGame() {
     const epsilon = new Image()
     epsilon.classList.add('epsilon', 'ship', 'placed');
     epsilon.src = epsilonImg;
+
     let playerTurn = true;
     const shipImagePlaced = {alpha: false, beta: false, gamma: false, delta: false, epsilon: false};
     const shipNameToImage = {'alpha': alpha, 'beta': beta, 'gamma': gamma, 'delta': delta, 'epsilon': epsilon};
+
     setupEventListeners();
     
 
 
     function renderBoards() {
         const setupBoard = document.querySelector('.gameboard');
-        const playerBoard = document.createElement('div');
         playerBoard.classList.add('gameboard', 'player-board');
-        const computerBoard = document.createElement('div');
         computerBoard.classList.add('gameboard', 'computer-board');
         for (let i = 0; i < 100; i++) {
             const newPlayerCell = document.createElement('div');
@@ -95,6 +98,15 @@ export default function startGame() {
         } else return false;
     };
 
+    function displayMessage(message, element) {
+        const overlayMsg = document.createElement('h1');
+        overlayMsg.classList.add('overlay-msg');
+        overlayMsg.textContent = message;
+        element.appendChild(overlayMsg);
+        overlayMsg.style.opacity = '100%';
+        setTimeout(() => {overlayMsg.remove()}, 2000);
+    };
+
     function setComputerBoard() {
         const computerCells = document.querySelectorAll('.computer-board > .cell');
         for (let i = 0; i < 100; i++) {
@@ -107,16 +119,20 @@ export default function startGame() {
                     computerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     if (computer.myBoard.cells[y][x].isSunk()) {
                         console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
+                        displayMessage(`${computer.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, computerBoard);
                         // add image of computer ship to computer board
                         // add some sort of cross out over it?
                         if (computer.myBoard.isGameOver()) {
-                            endGame();
+                            endGame('PLAYER');
                             return
                         };
+                    } else {
+                        displayMessage('HIT', computerBoard);
                     }
                     playerTurn = !playerTurn;
                 } else if (playerTurn) {
                     console.log('player missed');
+                    displayMessage('MISS', computerBoard);
                     computerCells[i].style.backgroundColor = 'grey';
                     playerTurn = !playerTurn;
                 } else {
@@ -126,9 +142,20 @@ export default function startGame() {
         };
     };
 
-    function endGame() {
+    function endGame(winner) {
         console.log('game Over!');
-    }
+        const endScreen = document.createElement('div');
+        endScreen.classList.add('end-screen');
+        const endMsg = document.createElement('h1');
+        endMsg.classList.add('end-msg');
+        endMsg.textContent = `${winner} WON!`;
+        endScreen.appendChild(endMsg);
+        const replayButton = document.createElement('button');
+        replayButton.classList.add('replay');
+        replayButton.textContent = 'Play Again';
+        endScreen.appendChild(replayButton);
+        document.body.appendChild(endScreen);
+    };
 
     function setPlayerBoard() {
         const playerCells = document.querySelectorAll('.player-board > .cell');
@@ -141,18 +168,21 @@ export default function startGame() {
             playerCells[i].addEventListener('click', () => {
                 if (!playerTurn && computerAttack(x,y)) {
                     console.log('computer hit player ship');
+                    displayMessage('HIT', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     if (player1.myBoard.cells[y][x].isSunk()) {
                         console.log('player ', player1.myBoard.cells[y][x].name, ' is sunk!');
+                        displayMessage(`${player.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
                         // add some sort of cross out over player ship?
                         if (player1.myBoard.isGameOver()) {
-                            endGame();
+                            endGame('COMPUTER');
                             return;
                         };
                     };
                     playerTurn = !playerTurn;
                 } else if (!playerTurn) {
                     console.log('computer missed');
+                    displayMessage('MISS', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
                     playerTurn = !playerTurn;
                 } else {

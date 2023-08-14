@@ -67,12 +67,12 @@ function submitBoard() {
     startGame();
 };
 
-function flipAxis() { // Good to go
+function flipAxis() { 
     vertical = !vertical;
     axis.textContent = vertical ? 'VERTICAL' : 'HORIZONTAL';
 };
 
-function clearBoard() { // Good to go
+function clearBoard() { 
     player1.myBoard.resetBoard();
     alpha.parentElement.removeChild(alpha);
     if (alpha.classList.contains('placed')) alpha.classList.remove('placed');
@@ -258,6 +258,7 @@ function setupEventListeners() {
         currentShip = epsilon;
         while (!placeShip(getRandomCellIndex())) {
         };
+        vertical = false;
     };
 
     board.addEventListener('mouseleave', e => {
