@@ -1,4 +1,4 @@
-export default class Ship {
+class Ship {
     length;
     numOfHits;
     name;
@@ -19,3 +19,5 @@ export default class Ship {
     };
 
 };
+
+module.exports = Ship;

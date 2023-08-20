@@ -1,12 +1,12 @@
-import './style.css'
-import Player from './player'
-import Ship from './ship'
-import startGame from './game';
-import './images/Alpha.png'
-import './images/Beta.png'
-import './images/Gamma.png'
-import './images/Delta.png'
-import './images/Epsilon.png'
+require('./style.css');
+const Player = require('./player')
+const Ship = require('./ship')
+const startGame = require('./game');
+require('./images/Alpha.png');
+require('./images/Beta.png');
+require('./images/Gamma.png');
+require('./images/Delta.png');
+require('./images/Epsilon.png');
 
 const player1 = new Player('player1');
 const random = document.querySelector('.random');
@@ -64,7 +64,7 @@ function allowSubmit() {
 };
 
 function submitBoard() {
-    startGame();
+    startGame(player1);
 };
 
 function flipAxis() { 
@@ -130,9 +130,15 @@ function placeShip(index) {
     };
     const start = [startX, startY];
     const end = [endX, endY];
-    if (!player1.myBoard.setShip(player1[ship], start, end)) {
-        return
-    };
+    try {
+        if (!player1.myBoard.setShip(player1[ship], start, end)) {
+            return;
+        }
+    } catch (err) {
+        alert('out of bounds!');
+        console.error(`ship: ${ship}, start: ${start}, end: ${end}:`, err);
+        return;
+    }
     cells[index].appendChild(currentShip);
     updateCellStyling();
 
@@ -295,4 +301,4 @@ function setupEventListeners() {
 
 setupEventListeners();
 
-export { player1, styleVertical };
+module.exports = { player1, styleVertical };

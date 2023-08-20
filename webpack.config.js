@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/gameSetup.js',
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   plugins: [
     new HtmlWebpackPlugin({
         title: 'Battleship',
