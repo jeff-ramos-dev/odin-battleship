@@ -51,8 +51,6 @@ export default function startGame() {
             newComputerCell.classList.add('cell');
             playerBoard.appendChild(newPlayerCell)
             computerBoard.appendChild(newComputerCell);
-            const x = i % 10;
-            const y = Math.floor(i / 10);
         };
         const gameContainer = document.createElement('div');
         gameContainer.classList.add('game-container');
@@ -65,7 +63,7 @@ export default function startGame() {
         reset.parentElement.removeChild(reset);
         axis.parentElement.removeChild(axis);
         buttons.parentElement.removeChild(buttons);
-        setupBoard.parentElement.removeChild(setupBoard);
+        setupBoard.remove();
 
         computer.myBoard.setShip(computer.myBoard.ships['alpha'], [0, 0], [1, 0]);
         computer.myBoard.setShip(computer.myBoard.ships['beta'], [0, 1], [2, 1]);
@@ -114,7 +112,6 @@ export default function startGame() {
     function setComputerBoard() {
         const computerCells = document.querySelectorAll('.computer-board > .cell');
         for (let i = 0; i < 100; i++) {
-            computerCells[i].style.border = '2px solid red';
             const x = i % 10;
             const y = Math.floor(i / 10);
             computerCells[i].addEventListener('click', () => {
@@ -178,6 +175,7 @@ export default function startGame() {
             const y = Math.floor(i / 10);
             if (player1.myBoard.cells[y][x] instanceof Ship) {
                 playerCells[i].style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
+                playerCells[i].style.border = '2px solid green';
             };
             playerCells[i].addEventListener('click', () => {
                 if (!playerTurn && computerAttack(x,y)) {
@@ -229,7 +227,12 @@ export default function startGame() {
             if (player1.myBoard.cells[y][x] instanceof Ship && player1.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
                 if (player1.myBoard.cells[y][x+1] !== player1.myBoard.cells[y][x]) {
                     styleVertical(shipNameToImage[shipName], player1.myBoard.cells[y][x].length);
+                } else {
+                    shipNameToImage[shipName].style.top = 0;
+                    shipNameToImage[shipName].style.left = 0;
+                    shipNameToImage[shipName].style.transform = '';
                 };
+
                 playerCells[i].appendChild(shipNameToImage[shipName]);
                 shipImagePlaced[shipName] = true;
             };

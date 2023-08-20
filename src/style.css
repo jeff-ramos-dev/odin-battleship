@@ -57,10 +57,14 @@ button:hover {
     position: relative;
     height: 40px;
     width: 40px;
-    border: 2px solid grey;
+    border: 2px solid lightgreen;
     color: white;
     text-align: center;
     font-size: 1.5rem;
+}
+
+.computer-board > .cell {
+    border: 2px solid lightcoral;
 }
 
 .gameboard {
@@ -103,7 +107,7 @@ button:hover {
 
 .alpha {
     width: 84px;
-    transform: scale(0.9, 1) translateX(-2px);
+    transform: scale(0.9, 1) translateX(-2px) translateY(-2px);
     background-image: url('./images/Alpha.png');
 }
 
@@ -143,7 +147,7 @@ button:hover {
     background-color: rgba(200, 200, 200, 0.5);
     font-size: 3rem;
     text-align: center;
-    color: blue; 
+    color: white; 
     top: 50%;
     transition: all 2s;
     transform: translateY(-50%);
