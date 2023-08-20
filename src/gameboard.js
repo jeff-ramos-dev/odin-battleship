@@ -1,6 +1,8 @@
-import Ship from './ship.js';
+const Ship = require('./ship.js');
 
-export default class Gameboard {
+class ShipOutOfBoundsError extends Error {}
+
+class Gameboard {
     ships = this.#createShips();
     cells = this.#createEmptyBoard();
     #attacks = [];
@@ -94,7 +96,9 @@ export default class Gameboard {
         end[1] > 9 || end[0] > 9 ||
         start[1] < 0 || start[0] < 0 ||
         end[1] < 0 || end[0] < 0
-        ) return false; 
+        ) {
+            throw new ShipOutOfBoundsError('out of bounds');
+        }
 
         if (this.#placedShips.includes(ship.name)) {
             this.removeShip(ship);
@@ -156,3 +160,5 @@ export default class Gameboard {
         return true;
     };
 };
+
+module.exports = Gameboard;

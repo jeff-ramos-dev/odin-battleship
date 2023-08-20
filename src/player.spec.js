@@ -1,4 +1,4 @@
-import Player from './player.js';
+const Player = require('./player.js');
 
 describe('player test', () => {
     test('player can make an attack', () => {

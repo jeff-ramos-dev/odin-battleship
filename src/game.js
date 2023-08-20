@@ -1,13 +1,13 @@
-import  { styleVertical, player1 } from './gameSetup';
-import Player from './player';
-import Ship from './ship';
-import alphaImg from './images/Alpha.png';
-import betaImg from './images/Beta.png';
-import gammaImg from './images/Gamma.png';
-import deltaImg from './images/Delta.png';
-import epsilonImg from './images/Epsilon.png';
+const { styleVertical, /* player1 */ } = require('./gameSetup');
+const Player = require('./player');
+const Ship = require('./ship');
+const alphaImg = require('./images/Alpha.png');
+const betaImg = require('./images/Beta.png');
+const gammaImg = require('./images/Gamma.png');
+const deltaImg = require('./images/Delta.png');
+const epsilonImg = require('./images/Epsilon.png');
 
-export default function startGame() {
+function startGame(player1) {
     console.log('game started')
     const computer = new Player('Computer');
     const playerBoard = document.createElement('div');
@@ -246,3 +246,5 @@ export default function startGame() {
         addShipImage('epsilon');
     };
 };
+
+module.exports = startGame;
