@@ -1,4 +1,4 @@
-const { styleVertical } = require('./utils');
+const { styleVertical, calcXandY } = require('./utils');
 const Player = require('./player');
 const Ship = require('./ship');
 const alphaImg = require('./images/Alpha.png');
@@ -112,8 +112,7 @@ function startGame(player) {
     function setComputerBoard() {
         const computerCells = document.querySelectorAll('.computer-board > .cell');
         for (let i = 0; i < 100; i++) {
-            const x = i % 10;
-            const y = Math.floor(i / 10);
+            const { x, y } = calcXandY(i);
             computerCells[i].addEventListener('click', () => {
                 if (playerTurn && !computerCells[i].classList.contains('attacked') && playerAttack(x, y)) {
                     console.log('player hit computer ship');
@@ -122,8 +121,7 @@ function startGame(player) {
                     computerCells[i].textContent = 'X';
                     if (computer.myBoard.cells[y][x].isSunk()) {
                         for (let i = 0; i < 100; i++) {
-                            const x = i % 10;
-                            const y = Math.floor(i / 10);
+                            const { x, y } = calcXandY(i);
                             if (computer.myBoard.cells[y][x].isSunk()) {
                                 computerCells[i].style.borderColor = 'red';
                                 computerCells[i].style.color = 'black';
@@ -131,8 +129,6 @@ function startGame(player) {
                         };
                         console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
                         displayMessage(`${computer.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, computerBoard);
-                        // add image of computer ship to computer board
-                        // add some sort of cross out over it?
                         if (computer.myBoard.isGameOver()) {
                             endGame('PLAYER');
                             return
@@ -170,8 +166,7 @@ function startGame(player) {
     function setPlayerBoard() {
         const playerCells = document.querySelectorAll('.player-board > .cell');
         for (let i = 0; i < 100; i++) {
-            const x = i % 10;
-            const y = Math.floor(i / 10);
+            const { x, y } = calcXandY(i);
             if (player.myBoard.cells[y][x] instanceof Ship) {
                 playerCells[i].style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
                 playerCells[i].style.border = '2px solid green';
@@ -189,8 +184,7 @@ function startGame(player) {
                     playerCells[i].appendChild(X);
                     if (player.myBoard.cells[y][x].isSunk()) {
                         for (let i = 0; i < 100; i++) {
-                            const x = i % 10;
-                            const y = Math.floor(i / 10);
+                            const { x, y } = calcXandY(i);
                             if (player.myBoard.cells[y][x].isSunk()) {
                                 playerCells[i].style.borderColor = 'red';
                                 playerCells[i].children[playerCells[i].children.length - 1].style.color = 'black';
@@ -221,8 +215,7 @@ function startGame(player) {
     function addShipImage(shipName) {
         const playerCells = document.querySelectorAll('.player-board > .cell');
         for (let i = 0; i < 100; i++) {
-            const x = i % 10;
-            const y = Math.floor(i / 10);
+            const { x, y } = calcXandY(i);
             if (player.myBoard.cells[y][x] instanceof Ship && player.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
                 if (player.myBoard.cells[y][x+1] !== player.myBoard.cells[y][x]) {
                     styleVertical(shipNameToImage[shipName], player.myBoard.cells[y][x].length);

@@ -21,4 +21,27 @@ function getRandomCellIndex() {
     return Math.floor(Math.random() * 100);
 };
 
-module.exports = { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex }
+function calcXandY(index) {
+    const x = index % 10;
+    const y = Math.floor(index / 10);
+    return { x, y }
+};
+
+function calcStartandEnd(index, length, vertical) {
+    const startX = index % 10;
+    const startY = Math.floor(index / 10);
+    let endX;
+    let endY;
+    if (vertical) {
+        endX = startX     
+        endY = startY + (length - 1);
+    } else {
+        endX = startX + (length - 1);
+        endY = startY;
+    };
+    const start = [startX, startY];
+    const end = [endX, endY];
+    return { start, end }
+};
+
+module.exports = { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex, calcStartandEnd, calcXandY }

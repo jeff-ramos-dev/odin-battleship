@@ -1,5 +1,5 @@
 require('./style.css');
-const { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex } = require('./utils');
+const { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex, calcStartandEnd } = require('./utils');
 const Player = require('./player')
 const Ship = require('./ship')
 const startGame = require('./game');
@@ -45,7 +45,7 @@ function updateCellStyling() {
     };
 }
 
-function removeShip(ship) { // needs work
+function removeShip(ship) { 
     ship.parentElement.removeChild(ship);
     const shipName = ship.classList[1];
     player1.myBoard.removeShip(shipName);
@@ -114,19 +114,7 @@ function placeShip(index) {
     }
     const ship = currentShip.classList[1];
     const length = player1.myBoard.ships[ship].length
-    const startX = index % 10;
-    const startY = Math.floor(index / 10);
-    let endX;
-    let endY;
-    if (vertical) {
-        endX = startX     
-        endY = startY + (length - 1);
-    } else {
-        endX = startX + (length - 1);
-        endY = startY;
-    };
-    const start = [startX, startY];
-    const end = [endX, endY];
+    const {start, end} = calcStartandEnd(index, length, vertical)
     try {
         if (!player1.myBoard.setShip(player1[ship], start, end)) {
             return;
