@@ -75,19 +75,19 @@ function flipAxis() {
 
 function clearBoard() { 
     player1.myBoard.resetBoard();
-    alpha.parentElement.removeChild(alpha);
+    alpha.remove();
     if (alpha.classList.contains('placed')) alpha.classList.remove('placed');
     alpha.style.transform = '';
-    beta.parentElement.removeChild(beta);
+    beta.remove();
     if (beta.classList.contains('placed')) beta.classList.remove('placed');
     beta.style.transform = '';
-    gamma.parentElement.removeChild(gamma);
+    gamma.remove();
     if (gamma.classList.contains('placed')) gamma.classList.remove('placed');
     gamma.style.transform= '';
-    delta.parentElement.removeChild(delta);
+    delta.remove();
     if (delta.classList.contains('placed')) delta.classList.remove('placed');
     delta.style.transform = '';
-    epsilon.parentElement.removeChild(epsilon);
+    epsilon.remove();
     if (epsilon.classList.contains('placed')) epsilon.classList.remove('placed');
     epsilon.style.transform = '';
 
