@@ -9,7 +9,9 @@ const epsilonImg = require('./images/epsilon.png');
 
 function startGame(player) {
     console.log('game started')
+    debugger;
     const computer = new Player('Computer');
+    console.log(computer.myBoard.cells);
     const playerBoard = document.createElement('div');
     const computerBoard = document.createElement('div');
 
@@ -38,8 +40,6 @@ function startGame(player) {
 
     setupEventListeners2();
     
-
-
     function renderBoards() {
         const setupBoard = document.querySelector('.gameboard');
         playerBoard.classList.add('gameboard', 'player-board');
@@ -88,14 +88,35 @@ function startGame(player) {
                 };
             };
             let {start, end} = calcStartandEnd(index, computer.myBoard.ships[shipName].length, vertical);
-            computer.myBoard.setShip(computer.myBoard.ships[shipName], start, end);
+            while(!computer.myBoard.setShip(computer.myBoard.ships[shipName], start, end)) {
+                let vertical = tf[getRandomTFIndex()];
+                let index = getRandomCellIndex();
+                let {x, y} = calcXandY(index);
+                if (vertical) {
+                    while(y + computer.myBoard.ships[shipName].length > 10) {
+                        index = getRandomCellIndex();
+                        ({x, y} = calcXandY(index));
+                    };
+                } else {
+                    while(x + computer.myBoard.ships[shipName].length > 10) {
+                        index = getRandomCellIndex(); 
+                        ({x, y} = calcXandY(index));
+                    };
+                };
+                ({start, end} = calcStartandEnd(index, computer.myBoard.ships[shipName].length, vertical));
+            };
         };
 
         setComputerShip('alpha');
+        console.log(computer.myBoard.cells)
         setComputerShip('beta');
+        console.log(computer.myBoard.cells)
         setComputerShip('gamma');
+        console.log(computer.myBoard.cells)
         setComputerShip('delta');
+        console.log(computer.myBoard.cells)
         setComputerShip('epsilon');
+        console.log(computer.myBoard.cells)
 
         gameContainer.appendChild(playerName);
         gameContainer.appendChild(playerBoard);

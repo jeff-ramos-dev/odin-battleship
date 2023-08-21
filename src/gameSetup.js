@@ -239,7 +239,6 @@ function setupEventListeners() {
         if (!e.target.classList.contains('ship') && e.target.localName !== 'button' && currentShip) {
             currentShip.style.border = 'none';
             if (!e.target.classList.contains('cell')) {
-                console.log('here');
                 currentShip = undefined;
             };
         };
