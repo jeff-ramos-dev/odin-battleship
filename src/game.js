@@ -57,11 +57,17 @@ function startGame(player) {
 
         const submit = document.querySelector('.submit');
         const reset = document.querySelector('.reset');
-        const axis = document.querySelector('.axis-instructions');
+        const axisContainer = document.querySelector('.axis-container');
         const buttons = document.querySelector('.buttons');
+        const playerName = document.createElement('h2');
+        playerName.textContent = 'Player';
+        playerName.classList.add('name');
+        const computerName = document.createElement('h2');
+        computerName.textContent = 'Computer';
+        computerName.classList.add('name');
         submit.parentElement.removeChild(submit);
         reset.parentElement.removeChild(reset);
-        axis.parentElement.removeChild(axis);
+        axisContainer.remove()
         buttons.parentElement.removeChild(buttons);
         setupBoard.remove();
 
@@ -71,7 +77,9 @@ function startGame(player) {
         computer.myBoard.setShip(computer.myBoard.ships['delta'], [0, 3], [3, 3]);
         computer.myBoard.setShip(computer.myBoard.ships['epsilon'], [0, 4], [4, 4]);
 
+        gameContainer.appendChild(playerName);
         gameContainer.appendChild(playerBoard);
+        gameContainer.appendChild(computerName);
         gameContainer.appendChild(computerBoard);
         document.body.appendChild(gameContainer);
     };

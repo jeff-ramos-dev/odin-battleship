@@ -79,9 +79,26 @@ button:hover {
     width: 448px;
 }
 
-.axis {
+.axis-container {
+    display: flex;
     margin-top: 20px;
-    color: green;
+    width: 300px;
+    justify-content: space-between
+}
+
+.axis-state-container {
+    display: flex;
+    width: 100px;
+    justify-content: center;
+}
+
+.axis {
+    color: white;
+}
+
+.name {
+    width: 100%;
+    text-align: center;
 }
 
 .ship-container {
