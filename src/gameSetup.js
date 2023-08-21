@@ -1,4 +1,5 @@
 require('./style.css');
+const { styleVertical } = require('./utils');
 const Player = require('./player')
 const Ship = require('./ship')
 const startGame = require('./game');
@@ -109,6 +110,15 @@ function findIndex(cell) {
     return children.indexOf(cell);
 };
 
+// function styleVertical(ship, length) { 
+//     ship.style.transform = 'rotate(90deg)';
+//     ship.style.top = `${(44 * (0.5 * (length - 1)))}px`;
+//     ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 6}px`;
+//     if (ship.classList[1] === 'beta' && !ship.parentElement.parentElement.parentElement.classList.contains('game-container')) {
+//         ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 18}px`;
+//     };
+// };
+
 function placeShip(index) { 
     if (!currentShip) return;
 
@@ -168,14 +178,6 @@ function placeShip(index) {
     return true;
 };
 
-function styleVertical(ship, length) { 
-    ship.style.transform = 'rotate(90deg)';
-    ship.style.top = `${(44 * (0.5 * (length - 1)))}px`;
-    ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 6}px`;
-    if (ship.classList[1] === 'beta' && !ship.parentElement.parentElement.parentElement.classList.contains('game-container')) {
-        ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 18}px`;
-    };
-};
 
 function handleCellClick(event) {
     if (event.target.classList.contains('cell')) {
@@ -301,4 +303,4 @@ function setupEventListeners() {
 
 setupEventListeners();
 
-module.exports = { player1, styleVertical };
+module.exports = { styleVertical };

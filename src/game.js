@@ -1,4 +1,4 @@
-const { styleVertical, /* player1 */ } = require('./gameSetup');
+const { styleVertical } = require('./utils');
 const Player = require('./player');
 const Ship = require('./ship');
 const alphaImg = require('./images/Alpha.png');
@@ -7,7 +7,7 @@ const gammaImg = require('./images/Gamma.png');
 const deltaImg = require('./images/Delta.png');
 const epsilonImg = require('./images/Epsilon.png');
 
-function startGame(player1) {
+function startGame(player) {
     console.log('game started')
     const computer = new Player('Computer');
     const playerBoard = document.createElement('div');
@@ -36,7 +36,7 @@ function startGame(player1) {
     const shipImagePlaced = {alpha: false, beta: false, gamma: false, delta: false, epsilon: false};
     const shipNameToImage = {'alpha': alpha, 'beta': beta, 'gamma': gamma, 'delta': delta, 'epsilon': epsilon};
 
-    setupEventListeners();
+    setupEventListeners2();
     
 
 
@@ -91,7 +91,7 @@ function startGame(player1) {
             return
         };
         console.log('computer makes attack');
-        if (player1.myBoard.receiveAttack(x, y)) {
+        if (player.myBoard.receiveAttack(x, y)) {
             return true;
         } else return false;
     };
@@ -173,7 +173,7 @@ function startGame(player1) {
         for (let i = 0; i < 100; i++) {
             const x = i % 10;
             const y = Math.floor(i / 10);
-            if (player1.myBoard.cells[y][x] instanceof Ship) {
+            if (player.myBoard.cells[y][x] instanceof Ship) {
                 playerCells[i].style.backgroundColor = 'rgba(0, 255, 0, 0.5)';
                 playerCells[i].style.border = '2px solid green';
             };
@@ -187,19 +187,19 @@ function startGame(player1) {
                     X.style.color = 'white';
                     X.style.fontSize = '1.5rem';
                     playerCells[i].appendChild(X);
-                    if (player1.myBoard.cells[y][x].isSunk()) {
+                    if (player.myBoard.cells[y][x].isSunk()) {
                         for (let i = 0; i < 100; i++) {
                             const x = i % 10;
                             const y = Math.floor(i / 10);
-                            if (player1.myBoard.cells[y][x].isSunk()) {
+                            if (player.myBoard.cells[y][x].isSunk()) {
                                 playerCells[i].style.borderColor = 'red';
                                 playerCells[i].children[playerCells[i].children.length - 1].style.color = 'black';
                             };
                         };
-                        console.log('player ', player1.myBoard.cells[y][x].name, ' is sunk!');
-                        displayMessage(`${player1.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
+                        console.log('player ', player.myBoard.cells[y][x].name, ' is sunk!');
+                        displayMessage(`${player.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
                         // add some sort of cross out over player ship?
-                        if (player1.myBoard.isGameOver()) {
+                        if (player.myBoard.isGameOver()) {
                             endGame('COMPUTER');
                             return;
                         };
@@ -224,9 +224,10 @@ function startGame(player1) {
         for (let i = 0; i < 100; i++) {
             const x = i % 10;
             const y = Math.floor(i / 10);
-            if (player1.myBoard.cells[y][x] instanceof Ship && player1.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
-                if (player1.myBoard.cells[y][x+1] !== player1.myBoard.cells[y][x]) {
-                    styleVertical(shipNameToImage[shipName], player1.myBoard.cells[y][x].length);
+            if (player.myBoard.cells[y][x] instanceof Ship && player.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
+                if (player.myBoard.cells[y][x+1] !== player.myBoard.cells[y][x]) {
+                    console.log('styleVertical');
+                    styleVertical(shipNameToImage[shipName], player.myBoard.cells[y][x].length);
                 } else {
                     shipNameToImage[shipName].style.top = 0;
                     shipNameToImage[shipName].style.left = 0;
@@ -239,7 +240,7 @@ function startGame(player1) {
         };
     };
 
-    function setupEventListeners() {
+    function setupEventListeners2() {
         setComputerBoard();
         setPlayerBoard();
         addShipImage('alpha');
