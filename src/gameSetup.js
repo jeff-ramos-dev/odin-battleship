@@ -1,5 +1,5 @@
 require('./style.css');
-const { styleVertical } = require('./utils');
+const { styleVertical, findIndex} = require('./utils');
 const Player = require('./player')
 const Ship = require('./ship')
 const startGame = require('./game');
@@ -104,11 +104,7 @@ function clearBoard() {
     Array.from(document.querySelectorAll('.cell')).forEach((elem) => elem.style.backgroundColor = '');
 };
 
-function findIndex(cell) {
-    const parent = cell.parentElement;
-    const children = Array.from(parent.children);
-    return children.indexOf(cell);
-};
+
 
 function placeShip(index) { 
     if (!currentShip) return;

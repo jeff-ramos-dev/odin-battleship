@@ -7,4 +7,10 @@ function styleVertical(ship, length) {
     };
 };
 
-module.exports = { styleVertical }
+function findIndex(cell) {
+    const parent = cell.parentElement;
+    const children = Array.from(parent.children);
+    return children.indexOf(cell);
+};
+
+module.exports = { styleVertical, findIndex }
