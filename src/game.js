@@ -226,7 +226,6 @@ function startGame(player) {
             const y = Math.floor(i / 10);
             if (player.myBoard.cells[y][x] instanceof Ship && player.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
                 if (player.myBoard.cells[y][x+1] !== player.myBoard.cells[y][x]) {
-                    console.log('styleVertical');
                     styleVertical(shipNameToImage[shipName], player.myBoard.cells[y][x].length);
                 } else {
                     shipNameToImage[shipName].style.top = 0;
