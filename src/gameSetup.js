@@ -3,11 +3,6 @@ const { styleShip, findIndex, getRandomTFIndex, getRandomCellIndex, calcStartand
 const Player = require('./player')
 const Ship = require('./ship')
 const startGame = require('./game');
-require('./images/Alpha.png');
-require('./images/Beta.png');
-require('./images/Gamma.png');
-require('./images/Delta.png');
-require('./images/Epsilon.png');
 
 const player1 = new Player('player1');
 const random = document.querySelector('.random');
@@ -25,6 +20,9 @@ const ships = [alpha, beta, gamma, delta, epsilon];
 const cells = Array.from(document.querySelectorAll('.cell'));
 let currentShip;
 let vertical = false;
+const green = 'rgba(0, 255, 0, 0.5)';
+const red = 'rgba(255, 0, 0, 0.5)';
+const grey = 'rgba(255, 255, 255, 0.5)';
 
 function selectShip(event) { 
     const shipElem = event.target;
@@ -37,7 +35,7 @@ function updateCellStyling() {
     for (let i = 0; i < player1.myBoard.cells.length; i++) {
         for (let j = 0; j < player1.myBoard.cells[i].length; j++) {
             if (player1.myBoard.cells[i][j] instanceof Ship) {
-                cells[i * 10 + j].style.backgroundColor = 'rgba(0, 255, 0, 0.5)'
+                cells[i * 10 + j].style.backgroundColor = green 
             } else {
                 cells[i * 10 + j].style.backgroundColor = '';
             };
@@ -180,22 +178,22 @@ function setupEventListeners() {
                     if (i + (length - 1) * 10 > 99 && i + j * 10 < 99) { // if the end of the ship goes out of bounds
                         cells[i + j * 10].style.backgroundColor = 'red';
                     } else if (i + j * 10 < 100) {
-                        if (cells[i + j * 10].style.backgroundColor === 'rgba(0, 255, 0, 0.5') {
-                            cells[i + j * 10].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                        if (cells[i + j * 10].style.backgroundColor === green) {
+                            cells[i + j * 10].style.backgroundColor = red;
                         } else {
-                            cells[i + j * 10].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                            cells[i + j * 10].style.backgroundColor = grey;
                         }
                     };
                 } else {
                     if (i % 10 + length > 10 && i % 10 + j < 10) {
-                        cells[i + j].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                        cells[i + j].style.backgroundColor = red;
                     } else if (i % 10 + j < 10) {
-                        if (cells[i + j].style.backgroundColor === 'rgba(0, 255, 0, 0.5)') {
+                        if (cells[i + j].style.backgroundColor === green) {
                             for (let k = 0; k < length; k++) {
-                            cells[i + j].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                            cells[i + j].style.backgroundColor = red;
                             }
                         } else {
-                            cells[i + j].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                            cells[i + j].style.backgroundColor = grey;
                         };
                     };
                 };

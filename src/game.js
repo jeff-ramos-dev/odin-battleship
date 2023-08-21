@@ -16,21 +16,21 @@ function startGame(player) {
 
     renderBoards();
 
-    const alpha = new Image()
+    const alpha = document.createElement('div');
     alpha.classList.add('alpha', 'ship', 'placed');
-    alpha.src = alphaImg;
-    const beta = new Image()
+    alpha.backgroundImage = alphaImg
+    const beta = document.createElement('div');
+    beta.backgroundImage = betaImg
     beta.classList.add('beta', 'ship', 'placed');
-    beta.src = betaImg;
-    const gamma = new Image()
+    const gamma = document.createElement('div');
     gamma.classList.add('gamma', 'ship', 'placed');
-    gamma.src = gammaImg;
-    const delta = new Image()
+    gamma.backgroundImage = gammaImg
+    const delta = document.createElement('div');
     delta.classList.add('delta', 'ship', 'placed');
-    delta.src = deltaImg;
-    const epsilon = new Image()
+    delta.backgroundImage = deltaImg;
+    const epsilon = document.createElement('div');
     epsilon.classList.add('epsilon', 'ship', 'placed');
-    epsilon.src = epsilonImg;
+    epsilon.backgroundImage = epsilonImg;
 
     let playerTurn = true;
     const shipImagePlaced = {alpha: false, beta: false, gamma: false, delta: false, epsilon: false};
