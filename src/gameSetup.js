@@ -1,5 +1,5 @@
 require('./style.css');
-const { styleVertical, findIndex} = require('./utils');
+const { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex } = require('./utils');
 const Player = require('./player')
 const Ship = require('./ship')
 const startGame = require('./game');
@@ -221,13 +221,6 @@ function setupEventListeners() {
         });
     };
 
-    function getRandomTFIndex() {
-        return Math.floor(Math.random() * 2);
-    };
-
-    function getRandomCellIndex() {
-        return Math.floor(Math.random() * 100);
-    };
 
     function placeShipsRandomly() {
         clearBoard(); 

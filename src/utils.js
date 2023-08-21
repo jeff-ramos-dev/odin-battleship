@@ -13,4 +13,12 @@ function findIndex(cell) {
     return children.indexOf(cell);
 };
 
-module.exports = { styleVertical, findIndex }
+function getRandomTFIndex() {
+    return Math.floor(Math.random() * 2);
+};
+
+function getRandomCellIndex() {
+    return Math.floor(Math.random() * 100);
+};
+
+module.exports = { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex }
