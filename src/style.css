@@ -107,31 +107,31 @@ button:hover {
 
 .alpha {
     width: 84px;
-    transform: scale(0.9, 1) translateX(-2px) translateY(-2px);
+    transform: scale(0.9, 1);
     background-image: url('./images/Alpha.png');
 }
 
 .beta {
     width: 98px;
-    transform: scale(1.3, 0.9) translateX(13px);
+    transform: scale(1.3, 0.9);
     background-image: url('./images/Beta.png');
 }
 
 .gamma {
     width: 117px;
-    transform: scale(1.1, 0.9) translateX(7px);
+    transform: scale(1.1, 0.9);
     background-image: url('./images/Gamma.png');
 }
 
 .delta {
     width: 157px;
-    transform: scale(1.1, 0.9) translateX(9px);
+    transform: scale(1.1, 0.9);
     background-image: url('./images/Delta.png');
 }
 
 .epsilon {
     width: 181px;
-    transform: scale(1.2, 0.9) translateX(16px);
+    transform: scale(1.2, 0.9);
     background-image: url('./images/Epsilon.png');
 }
 

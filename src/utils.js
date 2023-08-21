@@ -1,11 +1,60 @@
-function styleVertical(ship, length) { 
-    ship.style.transform = 'rotate(90deg)';
-    ship.style.top = `${(44 * (0.5 * (length - 1)))}px`;
-    ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 6}px`;
-    if (ship.classList[1] === 'beta' && !ship.parentElement.parentElement.parentElement.classList.contains('game-container')) {
-        ship.style.left = `-${(44 * (0.5 * (length - 1))) - (length - 2) * 18}px`;
-    };
-};
+function styleShip(ship, vertical) {
+    if (vertical) {
+        if (ship.classList.contains('alpha')) {
+            ship.style.top = '22px';
+            ship.style.left = `-22px`; 
+            ship.style.transform = 'scale(0.9, 0.9) rotate(90deg)'
+
+        } else if (ship.classList.contains('beta')) {
+            ship.style.top = '44px';
+            ship.style.left = `-28px`;
+            ship.style.transform = 'scale(1, 1.5) rotate(90deg)'
+
+        } else if (ship.classList.contains('gamma')) {
+            ship.style.top = '44px';
+            ship.style.left = `-40px`;
+            ship.style.transform = 'scale(0.9, 1.1) rotate(90deg)'
+
+        } else if (ship.classList.contains('delta')) {
+            ship.style.top = '64px';
+            ship.style.left = `-56px`;
+            ship.style.transform = 'scale(1, 1.2) rotate(90deg)'
+
+        } else if (ship.classList.contains('epsilon')) {
+            ship.style.top = '84px';
+            ship.style.left = `-64px`;
+            ship.style.transform = 'scale(1.2, 1.2) rotate(90deg)'
+
+        }
+    } else {
+        if (ship.classList.contains('alpha')) {
+            ship.style.top = '0';
+            ship.style.left = `0`;
+            ship.style.transform = 'scale(0.9, 1)'
+
+        } else if (ship.classList.contains('beta')) {
+            ship.style.top = '0';
+            ship.style.left = '0'; 
+            ship.style.transform = 'scale(1.3 , 0.9)' 
+
+        } else if (ship.classList.contains('gamma')) {
+            ship.style.top = '0';
+            ship.style.left = '0';
+            ship.style.transform = 'scale(1.1, 0.9)'
+
+        } else if (ship.classList.contains('delta')) {
+            ship.style.top = '0';
+            ship.style.left = '0';
+            ship.style.transform = 'scale(1.1, 0.9)'
+
+        } else if (ship.classList.contains('epsilon')) {
+            ship.style.top = '0';
+            ship.style.left = '10px';
+            ship.style.transform = 'scale(1.2, 0.9)'
+
+        }
+    }
+}
 
 function findIndex(cell) {
     const parent = cell.parentElement;
@@ -44,4 +93,11 @@ function calcStartandEnd(index, length, vertical) {
     return { start, end }
 };
 
-module.exports = { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex, calcStartandEnd, calcXandY }
+module.exports = {
+    styleShip,
+    findIndex,
+    getRandomTFIndex,
+    getRandomCellIndex,
+    calcStartandEnd,
+    calcXandY
+}

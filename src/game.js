@@ -1,4 +1,4 @@
-const { styleVertical, calcXandY } = require('./utils');
+const { styleShip, calcXandY } = require('./utils');
 const Player = require('./player');
 const Ship = require('./ship');
 const alphaImg = require('./images/Alpha.png');
@@ -218,11 +218,11 @@ function startGame(player) {
             const { x, y } = calcXandY(i);
             if (player.myBoard.cells[y][x] instanceof Ship && player.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
                 if (player.myBoard.cells[y][x+1] !== player.myBoard.cells[y][x]) {
-                    styleVertical(shipNameToImage[shipName], player.myBoard.cells[y][x].length);
+                    debugger;
+                    styleShip(shipNameToImage[shipName], true);
                 } else {
-                    shipNameToImage[shipName].style.top = 0;
-                    shipNameToImage[shipName].style.left = 0;
-                    shipNameToImage[shipName].style.transform = '';
+                    debugger;
+                    styleShip(shipNameToImage[shipName], false);
                 };
 
                 playerCells[i].appendChild(shipNameToImage[shipName]);

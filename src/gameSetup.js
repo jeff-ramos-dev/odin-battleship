@@ -1,5 +1,5 @@
 require('./style.css');
-const { styleVertical, findIndex, getRandomTFIndex, getRandomCellIndex, calcStartandEnd } = require('./utils');
+const { styleShip, findIndex, getRandomTFIndex, getRandomCellIndex, calcStartandEnd } = require('./utils');
 const Player = require('./player')
 const Ship = require('./ship')
 const startGame = require('./game');
@@ -77,19 +77,19 @@ function clearBoard() {
     player1.myBoard.resetBoard();
     alpha.remove();
     if (alpha.classList.contains('placed')) alpha.classList.remove('placed');
-    alpha.style.transform = '';
+    alpha.style.transform = 'scale(0.9, 1)';
     beta.remove();
     if (beta.classList.contains('placed')) beta.classList.remove('placed');
-    beta.style.transform = '';
+    beta.style.transform = 'scale(1.3, 0.9)';
     gamma.remove();
     if (gamma.classList.contains('placed')) gamma.classList.remove('placed');
-    gamma.style.transform= '';
+    gamma.style.transform= 'scale(1.1, 0.9)';
     delta.remove();
     if (delta.classList.contains('placed')) delta.classList.remove('placed');
-    delta.style.transform = '';
+    delta.style.transform = 'scale(1.1, 0.9)';
     epsilon.remove();
     if (epsilon.classList.contains('placed')) epsilon.classList.remove('placed');
-    epsilon.style.transform = '';
+    epsilon.style.transform = 'scale(1.2, 0.9)';
 
     if (!shipContainer.parentElement !== document.body) {
         document.body.appendChild(shipContainer)
@@ -126,13 +126,7 @@ function placeShip(index) {
     cells[index].appendChild(currentShip);
     updateCellStyling();
 
-    if (vertical) {
-        styleVertical(currentShip, length);
-    } else {
-        currentShip.style.transform = '';
-        currentShip.style.top = '';
-        currentShip.style.left = '';
-    };
+    styleShip(currentShip, vertical)
 
     if (!currentShip.classList.contains('placed')) {
         currentShip.classList.add('placed');
@@ -244,9 +238,10 @@ function setupEventListeners() {
     random.addEventListener('click', placeShipsRandomly);
 
     window.addEventListener('click', e => {
-        if (!e.target.classList.contains('ship') && currentShip) {
+        if (!e.target.classList.contains('ship') && e.target.localName !== 'button' && currentShip) {
             currentShip.style.border = 'none';
             if (!e.target.classList.contains('cell')) {
+                console.log('here');
                 currentShip = undefined;
             };
         };
@@ -269,5 +264,3 @@ function setupEventListeners() {
 };
 
 setupEventListeners();
-
-module.exports = { styleVertical };
