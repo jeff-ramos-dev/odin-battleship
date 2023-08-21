@@ -115,8 +115,9 @@ function startGame(player) {
             const x = i % 10;
             const y = Math.floor(i / 10);
             computerCells[i].addEventListener('click', () => {
-                if (playerTurn && playerAttack(x, y)) {
+                if (playerTurn && !computerCells[i].classList.contains('attacked') && playerAttack(x, y)) {
                     console.log('player hit computer ship');
+                    computerCells[i].classList.add('attacked');
                     computerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     computerCells[i].textContent = 'X';
                     if (computer.myBoard.cells[y][x].isSunk()) {
@@ -140,15 +141,13 @@ function startGame(player) {
                         displayMessage('HIT', computerBoard);
                     }
                     playerTurn = !playerTurn;
-                } else if (playerTurn) {
-                    console.log('player missed');
+                } else if (playerTurn && !computerCells[i].classList.contains('attacked')) {
+                    computerCells[i].classList.add('attacked');
                     displayMessage('MISS', computerBoard);
                     computerCells[i].style.backgroundColor = 'grey';
                     computerCells[i].textContent = 'O';
                     playerTurn = !playerTurn;
-                } else {
-                    console.log('not player turn');
-                }
+                };
             });
         };
     };
@@ -178,8 +177,9 @@ function startGame(player) {
                 playerCells[i].style.border = '2px solid green';
             };
             playerCells[i].addEventListener('click', () => {
-                if (!playerTurn && computerAttack(x,y)) {
+                if (!playerTurn && !playerCells[i].classList.contains('attacked') && computerAttack(x,y)) {
                     console.log('computer hit player ship');
+                    playerCells[i].classList.add('attacked');
                     displayMessage('HIT', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     const X = document.createElement('p');
@@ -205,14 +205,13 @@ function startGame(player) {
                         };
                     };
                     playerTurn = !playerTurn;
-                } else if (!playerTurn) {
+                } else if (!playerTurn && !playerCells[i].classList.contains('attacked')) {
                     console.log('computer missed');
+                    playerCells[i].classList.add('attacked');
                     displayMessage('MISS', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
                     playerCells[i].textContent = 'O';
                     playerTurn = !playerTurn;
-                } else {
-                    console.log('not computer turn');
                 };
             });
         };
