@@ -202,6 +202,7 @@ function startGame(player) {
         const replayButton = document.createElement('button');
         replayButton.classList.add('replay');
         replayButton.textContent = 'Play Again';
+        replayButton.addEventListener('click', () => location.reload());
         endScreen.appendChild(replayButton);
         document.body.appendChild(endScreen);
     };
