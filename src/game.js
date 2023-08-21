@@ -1,11 +1,11 @@
-const { styleShip, calcXandY } = require('./utils');
+const { styleShip, calcXandY, getRandomTFIndex, getRandomCellIndex, calcStartandEnd } = require('./utils');
 const Player = require('./player');
 const Ship = require('./ship');
-const alphaImg = require('./images/Alpha.png');
-const betaImg = require('./images/Beta.png');
-const gammaImg = require('./images/Gamma.png');
-const deltaImg = require('./images/Delta.png');
-const epsilonImg = require('./images/Epsilon.png');
+const alphaImg = require('./images/alpha.png');
+const betaImg = require('./images/beta.png');
+const gammaImg = require('./images/gamma.png');
+const deltaImg = require('./images/delta.png');
+const epsilonImg = require('./images/epsilon.png');
 
 function startGame(player) {
     console.log('game started')
@@ -70,12 +70,32 @@ function startGame(player) {
         axisContainer.remove()
         buttons.parentElement.removeChild(buttons);
         setupBoard.remove();
+        const tf = [true, false];
 
-        computer.myBoard.setShip(computer.myBoard.ships['alpha'], [0, 0], [1, 0]);
-        computer.myBoard.setShip(computer.myBoard.ships['beta'], [0, 1], [2, 1]);
-        computer.myBoard.setShip(computer.myBoard.ships['gamma'], [0, 2], [2, 2]);
-        computer.myBoard.setShip(computer.myBoard.ships['delta'], [0, 3], [3, 3]);
-        computer.myBoard.setShip(computer.myBoard.ships['epsilon'], [0, 4], [4, 4]);
+        let vertical = tf[getRandomTFIndex()];
+        let index = getRandomCellIndex();
+        let {start, end} = calcStartandEnd(index, computer.myBoard.ships['alpha'].length, vertical);
+        computer.myBoard.setShip(computer.myBoard.ships['alpha'], start, end);
+
+        vertical = tf[getRandomTFIndex()];
+        index = getRandomCellIndex();
+        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['beta'].length, vertical));
+        computer.myBoard.setShip(computer.myBoard.ships['beta'], start, end);
+
+        vertical = tf[getRandomTFIndex()];
+        index = getRandomCellIndex();
+        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['gamma'].length, vertical));
+        computer.myBoard.setShip(computer.myBoard.ships['gamma'], start, end);
+
+        vertical = tf[getRandomTFIndex()];
+        index = getRandomCellIndex();
+        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['delta'].length, vertical));
+        computer.myBoard.setShip(computer.myBoard.ships['delta'], start, end);
+
+        vertical = tf[getRandomTFIndex()];
+        index = getRandomCellIndex();
+        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['epsilon'].length, vertical));
+        computer.myBoard.setShip(computer.myBoard.ships['epsilon'], start, end);
 
         gameContainer.appendChild(playerName);
         gameContainer.appendChild(playerBoard);
@@ -83,7 +103,7 @@ function startGame(player) {
         gameContainer.appendChild(computerBoard);
         document.body.appendChild(gameContainer);
     };
-    
+
     function playerAttack(x, y) {
         if (!playerTurn) {
             return;
@@ -133,6 +153,11 @@ function startGame(player) {
                             if (computer.myBoard.cells[y][x].isSunk()) {
                                 computerCells[i].style.borderColor = 'red';
                                 computerCells[i].style.color = 'black';
+                                // const sunkShip = document.createElement('div');
+                                // sunkShip.backgroundImage = `./images/${computer.myBoard.cells[y][x].name}.png`;
+                                // sunkShip.classList.add('ship', computer.myBoard.cells[y][x].name, 'placed');
+                                // computerCells[i].appendChild(sunkShip);
+                                // styleShip(sunkShip, false);
                             };
                         };
                         console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
@@ -226,10 +251,8 @@ function startGame(player) {
             const { x, y } = calcXandY(i);
             if (player.myBoard.cells[y][x] instanceof Ship && player.myBoard.cells[y][x].name === shipName && !shipImagePlaced[shipName]) {
                 if (player.myBoard.cells[y][x+1] !== player.myBoard.cells[y][x]) {
-                    debugger;
                     styleShip(shipNameToImage[shipName], true);
                 } else {
-                    debugger;
                     styleShip(shipNameToImage[shipName], false);
                 };
 
