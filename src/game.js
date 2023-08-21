@@ -70,32 +70,32 @@ function startGame(player) {
         axisContainer.remove()
         buttons.parentElement.removeChild(buttons);
         setupBoard.remove();
-        const tf = [true, false];
 
-        let vertical = tf[getRandomTFIndex()];
-        let index = getRandomCellIndex();
-        let {start, end} = calcStartandEnd(index, computer.myBoard.ships['alpha'].length, vertical);
-        computer.myBoard.setShip(computer.myBoard.ships['alpha'], start, end);
+        function setComputerShip(shipName) {
+            const tf = [true, false];
+            let vertical = tf[getRandomTFIndex()];
+            let index = getRandomCellIndex();
+            let {x, y} = calcXandY(index);
+            if (vertical) {
+                while(y + computer.myBoard.ships[shipName].length > 10) {
+                    index = getRandomCellIndex();
+                    ({x, y} = calcXandY(index));
+                };
+            } else {
+                while(x + computer.myBoard.ships[shipName].length > 10) {
+                    index = getRandomCellIndex(); 
+                    ({x, y} = calcXandY(index));
+                };
+            };
+            let {start, end} = calcStartandEnd(index, computer.myBoard.ships[shipName].length, vertical);
+            computer.myBoard.setShip(computer.myBoard.ships[shipName], start, end);
+        };
 
-        vertical = tf[getRandomTFIndex()];
-        index = getRandomCellIndex();
-        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['beta'].length, vertical));
-        computer.myBoard.setShip(computer.myBoard.ships['beta'], start, end);
-
-        vertical = tf[getRandomTFIndex()];
-        index = getRandomCellIndex();
-        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['gamma'].length, vertical));
-        computer.myBoard.setShip(computer.myBoard.ships['gamma'], start, end);
-
-        vertical = tf[getRandomTFIndex()];
-        index = getRandomCellIndex();
-        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['delta'].length, vertical));
-        computer.myBoard.setShip(computer.myBoard.ships['delta'], start, end);
-
-        vertical = tf[getRandomTFIndex()];
-        index = getRandomCellIndex();
-        ({start, end} = calcStartandEnd(index, computer.myBoard.ships['epsilon'].length, vertical));
-        computer.myBoard.setShip(computer.myBoard.ships['epsilon'], start, end);
+        setComputerShip('alpha');
+        setComputerShip('beta');
+        setComputerShip('gamma');
+        setComputerShip('delta');
+        setComputerShip('epsilon');
 
         gameContainer.appendChild(playerName);
         gameContainer.appendChild(playerBoard);
@@ -177,8 +177,18 @@ function startGame(player) {
                     computerCells[i].textContent = 'O';
                     playerTurn = !playerTurn;
                 };
+            setTimeout(() => {
+                debugger;
+                const playerCells = Array.from(document.querySelectorAll('.player-board > .cell'));
+                let playerCellTarget = playerCells[getRandomCellIndex()];
+                while(playerCellTarget.style.backgroundColor === 'rgba(255, 0, 0, 0.5)' || playerCellTarget.style.backgroundColor === 'rgba(255, 255, 255, 0.5)') {
+                    playerCellTarget = playerCells[getRandomCellIndex()];
+                }
+                playerCellTarget.click();
+            }, 1500);
             });
         };
+        
     };
 
     function endGame(winner) {
