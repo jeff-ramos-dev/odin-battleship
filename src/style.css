@@ -81,6 +81,22 @@ button:hover {
     width: 448px;
 }
 
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: x-small;
+    text-align: center;
+}
+
+#name {
+    max-width: 300px;
+    margin: 0;
+}
+
 .axis-container {
     display: flex;
     flex-direction: column;

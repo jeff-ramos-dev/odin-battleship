@@ -8,6 +8,7 @@ const player1 = new Player('player1');
 const random = document.querySelector('.random');
 const reset = document.querySelector('.reset');
 const submit = document.querySelector('.submit');
+const nameInput = document.getElementById('name');
 const axisToggle = document.querySelector('.axis-toggle');
 const shipContainer = document.querySelector('.ship-container');
 const axis = document.querySelector('.axis');
@@ -64,6 +65,11 @@ function allowSubmit() {
 };
 
 function submitBoard() {
+    if (nameInput.value !== '') {
+        player1.myName = nameInput.value;
+    } else {
+        player1.myName = 'Player';
+    }
     startGame(player1);
 };
 

@@ -42,6 +42,8 @@ function startGame(player) {
     
     function renderBoards() {
         const setupBoard = document.querySelector('.gameboard');
+        const nameContainer = document.querySelector('.name-container');
+        nameContainer.remove();
         playerBoard.classList.add('gameboard', 'player-board');
         computerBoard.classList.add('gameboard', 'computer-board');
         for (let i = 0; i < 100; i++) {
@@ -60,7 +62,7 @@ function startGame(player) {
         const axisContainer = document.querySelector('.axis-container');
         const buttons = document.querySelector('.buttons');
         const playerName = document.createElement('h2');
-        playerName.textContent = 'Player';
+        playerName.textContent = player.myName;
         playerName.classList.add('name');
         const computerName = document.createElement('h2');
         computerName.textContent = 'Computer';
@@ -184,7 +186,7 @@ function startGame(player) {
                         console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
                         displayMessage(`${computer.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, computerBoard);
                         if (computer.myBoard.isGameOver()) {
-                            endGame('PLAYER');
+                            endGame(player.myName);
                             return
                         };
                     } else {
