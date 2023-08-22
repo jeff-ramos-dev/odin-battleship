@@ -83,13 +83,24 @@ button:hover {
 
 .axis-container {
     display: flex;
-    margin-top: 20px;
+    flex-direction: column;
+    margin-top: 0px;
     width: 300px;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: center;
+}
+
+.axis-toggle {
+    display: block;
+}
+
+.axis-instructions {
+    display: none;
 }
 
 .axis-state-container {
     display: flex;
+    margin-top: 20px;
     width: 100px;
     justify-content: center;
 }
@@ -203,4 +214,23 @@ button:hover {
     padding-bottom: 1.5rem;
     border: 6px solid green;
     border-radius: 20px;
+}
+
+@media screen and (min-width: 480px) {
+
+    .axis-instructions {
+        display: block;
+    }
+
+    .axis-toggle {
+        display: none;
+    }
+
+    .axis-container {
+        display: flex;
+        margin-top: 20px;
+        width: 300px;
+        justify-content: space-between
+    }
+    
 }

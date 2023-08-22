@@ -8,6 +8,7 @@ const player1 = new Player('player1');
 const random = document.querySelector('.random');
 const reset = document.querySelector('.reset');
 const submit = document.querySelector('.submit');
+const axisToggle = document.querySelector('.axis-toggle');
 const shipContainer = document.querySelector('.ship-container');
 const axis = document.querySelector('.axis');
 const alpha = document.querySelector('.alpha');
@@ -234,6 +235,7 @@ function setupEventListeners() {
 
     reset.addEventListener('click', clearBoard);
     random.addEventListener('click', placeShipsRandomly);
+    axisToggle.addEventListener('click', flipAxis);
 
     window.addEventListener('click', e => {
         if (!e.target.classList.contains('ship') && e.target.localName !== 'button' && currentShip) {
