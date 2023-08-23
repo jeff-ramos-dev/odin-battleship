@@ -42,46 +42,6 @@ button:hover {
     background-color: rgb(38, 38, 38);
 }
 
-.reset, .random {
-    margin-left: 20px;
-}
-
-.submit {
-    opacity: 0.5;
-}
-
-.cell:hover {
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.cell {
-    position: relative;
-    height: 40px;
-    width: 40px;
-    border: 2px solid lightgreen;
-    color: white;
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-.computer-board > .cell {
-    border: 2px solid lightcoral;
-}
-
-.gameboard {
-    position: relative;
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    border: 2px solid green;
-    margin-top: 20px;
-    height: 444px;
-    width: 448px;
-}
-
-
 .name-container {
     display: flex;
     flex-direction: column;
@@ -129,6 +89,45 @@ label {
     width: 100%;
     text-align: center;
     margin-top: 40px;
+}
+
+.gameboard {
+    position: relative;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    border: 2px solid green;
+    margin-top: 20px;
+    height: 444px;
+    width: 448px;
+}
+
+.computer-board > .cell {
+    border: 2px solid lightcoral;
+}
+
+.reset, .random {
+    margin-left: 20px;
+}
+
+.submit {
+    opacity: 0.5;
+}
+
+.cell:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.cell {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    border: 2px solid lightgreen;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
 }
 
 .ship-container {
