@@ -8,10 +8,7 @@ const deltaImg = require('./images/delta.png');
 const epsilonImg = require('./images/epsilon.png');
 
 function startGame(player) {
-    console.log('game started')
-    debugger;
     const computer = new Player('Computer');
-    console.log(computer.myBoard.cells);
     const playerBoard = document.createElement('div');
     const computerBoard = document.createElement('div');
 
@@ -67,10 +64,10 @@ function startGame(player) {
         const computerName = document.createElement('h2');
         computerName.textContent = 'Computer';
         computerName.classList.add('name');
-        submit.parentElement.removeChild(submit);
-        reset.parentElement.removeChild(reset);
-        axisContainer.remove()
-        buttons.parentElement.removeChild(buttons);
+        submit.remove();
+        reset.remove();
+        axisContainer.remove();
+        buttons.remove();
         setupBoard.remove();
 
         function setComputerShip(shipName) {
@@ -110,15 +107,10 @@ function startGame(player) {
         };
 
         setComputerShip('alpha');
-        console.log(computer.myBoard.cells)
         setComputerShip('beta');
-        console.log(computer.myBoard.cells)
         setComputerShip('gamma');
-        console.log(computer.myBoard.cells)
         setComputerShip('delta');
-        console.log(computer.myBoard.cells)
         setComputerShip('epsilon');
-        console.log(computer.myBoard.cells)
 
         gameContainer.appendChild(playerName);
         gameContainer.appendChild(playerBoard);
@@ -131,7 +123,6 @@ function startGame(player) {
         if (!playerTurn) {
             return;
         };
-        console.log('player makes attack');
         if (computer.myBoard.receiveAttack(x, y)) {
             return true;
         } else return false;
@@ -141,7 +132,6 @@ function startGame(player) {
         if (playerTurn) {
             return
         };
-        console.log('computer makes attack');
         if (player.myBoard.receiveAttack(x, y)) {
             return true;
         } else return false;
@@ -166,7 +156,6 @@ function startGame(player) {
             const { x, y } = calcXandY(i);
             computerCells[i].addEventListener('click', () => {
                 if (playerTurn && !computerCells[i].classList.contains('attacked') && playerAttack(x, y)) {
-                    console.log('player hit computer ship');
                     computerCells[i].classList.add('attacked');
                     computerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
                     computerCells[i].textContent = 'X';
@@ -176,14 +165,8 @@ function startGame(player) {
                             if (computer.myBoard.cells[y][x].isSunk()) {
                                 computerCells[i].style.borderColor = 'red';
                                 computerCells[i].style.color = 'black';
-                                // const sunkShip = document.createElement('div');
-                                // sunkShip.backgroundImage = `./images/${computer.myBoard.cells[y][x].name}.png`;
-                                // sunkShip.classList.add('ship', computer.myBoard.cells[y][x].name, 'placed');
-                                // computerCells[i].appendChild(sunkShip);
-                                // styleShip(sunkShip, false);
                             };
                         };
-                        console.log('computer ', computer.myBoard.cells[y][x].name, ' is sunk!');
                         displayMessage(`${computer.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, computerBoard);
                         if (computer.myBoard.isGameOver()) {
                             endGame(player.myName);
@@ -201,7 +184,6 @@ function startGame(player) {
                     playerTurn = !playerTurn;
                 };
             setTimeout(() => {
-                debugger;
                 const playerCells = Array.from(document.querySelectorAll('.player-board > .cell'));
                 let playerCellTarget = playerCells[getRandomCellIndex()];
                 while(playerCellTarget.style.backgroundColor === 'rgba(255, 0, 0, 0.5)' || playerCellTarget.style.backgroundColor === 'rgba(255, 255, 255, 0.5)') {
@@ -215,7 +197,6 @@ function startGame(player) {
     };
 
     function endGame(winner) {
-        console.log('game Over!');
         const endScreen = document.createElement('div');
         endScreen.classList.add('end-screen');
         const endMsg = document.createElement('h1');
@@ -240,7 +221,6 @@ function startGame(player) {
             };
             playerCells[i].addEventListener('click', () => {
                 if (!playerTurn && !playerCells[i].classList.contains('attacked') && computerAttack(x,y)) {
-                    console.log('computer hit player ship');
                     playerCells[i].classList.add('attacked');
                     displayMessage('HIT', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
@@ -257,9 +237,7 @@ function startGame(player) {
                                 playerCells[i].children[playerCells[i].children.length - 1].style.color = 'black';
                             };
                         };
-                        console.log('player ', player.myBoard.cells[y][x].name, ' is sunk!');
                         displayMessage(`${player.myBoard.cells[y][x].name.toUpperCase()} SUNK!`, playerBoard);
-                        // add some sort of cross out over player ship?
                         if (player.myBoard.isGameOver()) {
                             endGame('COMPUTER');
                             return;
@@ -267,7 +245,6 @@ function startGame(player) {
                     };
                     playerTurn = !playerTurn;
                 } else if (!playerTurn && !playerCells[i].classList.contains('attacked')) {
-                    console.log('computer missed');
                     playerCells[i].classList.add('attacked');
                     displayMessage('MISS', playerBoard);
                     playerCells[i].style.backgroundColor = 'rgba(255, 255, 255, 0.5)';

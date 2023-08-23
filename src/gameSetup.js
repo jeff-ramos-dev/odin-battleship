@@ -20,11 +20,11 @@ const epsilon = document.querySelector('.epsilon');
 const board = document.querySelector('.gameboard');
 const ships = [alpha, beta, gamma, delta, epsilon];
 const cells = Array.from(document.querySelectorAll('.cell'));
-let currentShip;
-let vertical = false;
 const green = 'rgba(0, 255, 0, 0.5)';
 const red = 'rgba(255, 0, 0, 0.5)';
 const grey = 'rgba(255, 255, 255, 0.5)';
+let currentShip;
+let vertical = false;
 
 function selectShip(event) { 
     const shipElem = event.target;
